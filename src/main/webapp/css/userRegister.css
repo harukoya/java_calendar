@@ -1,0 +1,21 @@
+body{
+	margin: 5px;
+}
+h1{
+	width:800px;
+	margin:0 auto 20px;
+	text-align:left;
+	font-size:50px;
+}
+p{
+	margin: 5px;
+}
+table{
+	margin: 5px;
+}
+th{
+	padding: 5px;
+}
+td{
+	padding: 5px;
+}
