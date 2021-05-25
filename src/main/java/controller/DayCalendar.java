@@ -106,7 +106,6 @@ public class DayCalendar extends HttpServlet {
 		//	show.jspから呼ばれる。
 		//	入力されたスケジュールをデータベースに登録し、元のshow.jspにリダイレクト
 		//	その際に、登録できたか否かのメッセージを表示させる。
-		request.setCharacterEncoding("UTF-8");
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		String day = request.getParameter("day");

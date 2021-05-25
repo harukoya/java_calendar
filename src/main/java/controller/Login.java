@@ -28,7 +28,6 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String loginId = request.getParameter("loginId");
 		String pass = request.getParameter("password");
 
@@ -63,7 +62,7 @@ public class Login extends HttpServlet {
 			//	ログイン失敗
 			String errmsg = "ログインに失敗しました。ログインIDまたはパスワードが正しくありません。";
 			request.setAttribute("errmsg", errmsg);
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
 			rd.forward(request, response);
 		}
 	}
