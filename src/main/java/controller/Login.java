@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import model.MyCalendar;
 import model.MyCalendarLogic;
 import model.User;
+import model.UserDAO;
 import model.UserLogic;
 
 public class Login extends HttpServlet {
@@ -37,12 +41,22 @@ public class Login extends HttpServlet {
 		user.setLoginId(loginId);
 		user.setPass(pass);
 
+		//	Loggerクラスのインスタンスを生成
+		Logger logger = Logger.getLogger(UserDAO.class.getName());
+
+		try {
+			LogManager manager = LogManager.getLogManager();
+			manager.readConfiguration(UserDAO.class.getResourceAsStream("../logging.properties"));
+		} catch (IOException | SecurityException e) {
+			e.printStackTrace();
+		}
 		//	ユーザ検索
 		UserLogic userLogic = new UserLogic();
 		User loginUser = userLogic.findUser(user);
 
 		if (loginUser != null) {
 			//	ログイン成功
+			logger.log(Level.INFO, "ログイン成功", loginUser.getName());
 			//	セッションスコープにユーザ情報を格納
 			HttpSession session = request.getSession();
 			session.setAttribute("user", loginUser);
@@ -60,6 +74,7 @@ public class Login extends HttpServlet {
 			rd.forward(request, response);
 		} else {
 			//	ログイン失敗
+			logger.log(Level.INFO, "ログイン失敗");
 			String errmsg = "ログインに失敗しました。ログインIDまたはパスワードが正しくありません。";
 			request.setAttribute("errmsg", errmsg);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
