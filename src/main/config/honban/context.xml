@@ -30,6 +30,13 @@
   maxWaitMillis="10000"
   username="calendarUser"
   password="calendarPass"
+  removeAbandonedONBorrow = "true"
+  removeAbandonedOnMaintenance = "true"
+  removeAbandonedTimeout = "60"
+  validationQuery = "SELECT 1 FROM DUAL"
+  testOnBorrow = "true"
+  testWhileIdle = "true"
+  timeBetweenEvictionRunsMillis = "60000"
   driverClassName="com.mysql.jdbc.Driver"
   factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
   url="jdbc:mysql://calendar-db.cu3lr6vwgf9r.ap-northeast-1.rds.amazonaws.com:3306/calendar" />
