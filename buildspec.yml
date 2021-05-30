@@ -1,0 +1,42 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUILD_OUTPUT_BUCKET: "calendardeploybucket"
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+    commands:
+      # treeコマンドを使いたいのでインストール
+      - yum install -y tree
+
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+      - mvn clean
+  build:
+    commands:
+      - echo Build started on `date`
+      # maven実行(honban用でパッケージ。今はテストスキップ。。)
+      - mvn -P honban package -Dskiptests=true
+
+      # ソース,java,mavenのバージョンを出力
+      - echo "--------------------------------------------------" >> version.txt
+      - echo "SourceVersion:"$CODEBUILD_RESOLVED_SOURCE_VERSION >> version.txt
+      - java -version 2>> version.txt
+      - mvn -version >>version.txt
+      - echo "--------------------------------------------------" >> version.txt
+      ## version.txtの移動
+      - cp -p version.txt ./WebRoot/WEB-INF
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+      # treeコマンドで確認
+      - tree >>tree.txt
+      - aws s3 cp tree.txt s3://$S3_BUILD_OUTPUT_BUCKET
+      # S3にwarファイルをアップロード
+      - aws s3 cp ./target/calendar.war s3://$S3_BUILD_OUTPUT_BUCKET
