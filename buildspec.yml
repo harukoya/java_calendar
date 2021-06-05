@@ -28,8 +28,6 @@ phases:
       - java -version 2>> version.txt
       - mvn -version >>version.txt
       - echo "--------------------------------------------------" >> version.txt
-      ## version.txtの移動
-      - cp -p version.txt ./WebRoot/WEB-INF
 
   post_build:
     commands:
@@ -38,6 +36,8 @@ phases:
       # treeコマンドで確認
       - tree >>tree.txt
       - aws s3 cp tree.txt s3://$S3_BUILD_OUTPUT_BUCKET
+      # version.txtの移動
+      - aws s3 cp version.txt s3://$S3_BUILD_OUTPUT_BUCKET
       # warファイルとappspec.xmlを一つのZIPファイルに固める
       - zip -r ./calendar.zip ./target/calendar.war ./appspec.yml
       # S3にzipファイルをアップロード
