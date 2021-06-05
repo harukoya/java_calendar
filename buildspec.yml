@@ -38,5 +38,7 @@ phases:
       # treeコマンドで確認
       - tree >>tree.txt
       - aws s3 cp tree.txt s3://$S3_BUILD_OUTPUT_BUCKET
-      # S3にwarファイルをアップロード
-      - aws s3 cp ./target/calendar.war s3://$S3_BUILD_OUTPUT_BUCKET
+      # warファイルとappspec.xmlを一つのZIPファイルに固める
+      - zip -r ./calendar.zip ./target/calendar.war ./appspec.yml
+      # S3にzipファイルをアップロード
+      - aws s3 cp ./calendar.zip s3://$S3_BUILD_OUTPUT_BUCKET
