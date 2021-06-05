@@ -43,8 +43,8 @@ phases:
       # S3にzipファイルをアップロード
       # - aws s3 cp ./calendar.zip s3://$S3_BUILD_OUTPUT_BUCKET
 
-  artifacts:
-    files:
-      - target/calendar.war
-      - appspec.yml
-    discard-paths: no
+artifacts:
+  files:
+    - target/calendar.war
+    - appspec.yml
+  discard-paths: no
