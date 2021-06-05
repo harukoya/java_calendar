@@ -20,7 +20,7 @@ phases:
     commands:
       - echo Build started on `date`
       # maven実行(honban用でパッケージ。今はテストスキップ。。)
-      - mvn package -P honban -Dskiptests=true
+      - mvn package -P honban -DskipTests=true
 
       # ソース,java,mavenのバージョンを出力
       - echo "--------------------------------------------------" >> version.txt
