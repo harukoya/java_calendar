@@ -1,5 +1,5 @@
 version: 0.0
 os: linux
 files:
-  - source: calendar.war
+  - source: target/calendar.war
     destination: /usr/share/tomcat/webapps/
